@@ -3,36 +3,34 @@ from .strategy import CarRoute, BikeRoute, RouteStrategy, MotorcycleRoute
 from enum import Enum
 
 
-class Vehicle(Enum):
-    CAR = "car"
-    BIKE = "bike"
-    MOTORCYCLE = "motorcycle"
+class Universidades(Enum):
+    UNIMAG = "unimag"
+    UCC = "ucc"
+    UAN = "uan"
 
 
-def get_strategy(vehicle: Vehicle) -> RouteStrategy:
-    if vehicle == Vehicle.CAR:
-        return CarRoute()
-    elif vehicle == Vehicle.BIKE:
-        return BikeRoute()
-    elif vehicle == Vehicle.MOTORCYCLE:
-        return MotorcycleRoute()
+def get_strategy(universidades: Universidades) -> UniversidadStrategy:
+    if universidades == Universidades.UNIMAG:
+        return Unimag()
+    elif universidades == Universidades.UCC:
+        return UCC()
+    elif universidades == Universidades.UAN:
+        return UAN()
     else:
-        raise HTTPException(status_code=400, detail="Invalid vehicle")
+        raise HTTPException(status_code=400, detail="Invalid universidad")
 
 
 router = APIRouter()
 
 
-@router.get("/best_route")
-def best_route(origin: int, destination: int, vehicle: RouteStrategy = Depends(get_strategy)) -> dict:
-    return vehicle.get_best_route(origin=origin, destination=destination)
+@route.get("/reconocimiento")
+def reconocimiento(estrellas:int, universidades: UniversidadStrategy = Depends(get_strategy) ) ->int:
+    return universidades.get_reconocimiento(estrellas=estrellas)
 
+@route.get("/costo")
+def costo(valor_matricula: float, universidades: UniversidadStrategy = Depends(get_strategy) ) ->int:
+    return universidades.get_costo(valor_matricula= valor_matricula)
 
-@router.get("/cost")
-def cost(origin: int, destination: int, vehicle: RouteStrategy = Depends(get_strategy)) -> float:
-    return vehicle.get_cost(origin=origin, destination=destination)
-
-
-@router.get("/time")
-def time(origin: int, destination: int, vehicle: RouteStrategy = Depends(get_strategy)) -> float:
-    return vehicle.get_time(origin=origin, destination=destination)
+@route.get("/costo")
+def tiempo(origin: int, destination: int, universidades: UniversidadStrategy = Depends(get_strategy) ) ->float:
+    return universidades.get_tiempo(origin=origin, destination=destination)
