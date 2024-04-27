@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-
-from app.modules.routes.ejemplo_strategy import UAN, UCC, Unimag, UniversidadStrategy
+from .ejemplo_strategy import UAN, UCC, Unimag, UniversidadStrategy
 from enum import Enum
 
 
@@ -12,11 +11,11 @@ class Universidades(Enum):
 
 def get_strategy(universidades: Universidades) -> UniversidadStrategy:
     if universidades == Universidades.UNIMAG:
-        return Unimag()
+        return Unimag
     elif universidades == Universidades.UCC:
-        return UCC()
+        return UCC
     elif universidades == Universidades.UAN:
-        return UAN()
+        return UAN
     else:
         raise HTTPException(status_code=400, detail="Invalid universidad")
 
