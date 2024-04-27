@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from .strategy import CarRoute, BikeRoute, RouteStrategy, MotorcycleRoute
+
+from app.modules.routes.ejemplo_strategy import UAN, UCC, Unimag, UniversidadStrategy
 from enum import Enum
 
 
@@ -23,14 +24,14 @@ def get_strategy(universidades: Universidades) -> UniversidadStrategy:
 router = APIRouter()
 
 
-@route.get("/reconocimiento")
+@router.get("/reconocimiento")
 def reconocimiento(estrellas:int, universidades: UniversidadStrategy = Depends(get_strategy) ) ->int:
     return universidades.get_reconocimiento(estrellas=estrellas)
 
-@route.get("/costo")
+@router.get("/costo")
 def costo(valor_matricula: float, universidades: UniversidadStrategy = Depends(get_strategy) ) ->int:
     return universidades.get_costo(valor_matricula= valor_matricula)
 
-@route.get("/costo")
+@router.get("/costo")
 def tiempo(origin: int, destination: int, universidades: UniversidadStrategy = Depends(get_strategy) ) ->float:
     return universidades.get_tiempo(origin=origin, destination=destination)
