@@ -35,12 +35,12 @@ class UCC(UniversidadStrategy):
         return 3
 
 
-     @abstractmethod
-     def get_cost(self, valor_matricula:float) -> float:
+      @abstractmethod
+      def get_cost(self, valor_matricula:float) -> float:
         return 3000000
 
-     @abstractmethod
-     def get_time(self, origin: int, destination: int) -> float:
+      @abstractmethod
+      def get_time(self, origin: int, destination: int) -> float:
         return round((destination - origin) * 6, 2)
 
 
